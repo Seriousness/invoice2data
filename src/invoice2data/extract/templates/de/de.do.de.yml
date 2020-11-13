@@ -1,0 +1,25 @@
+issuer: Greenmark IT GmbH
+fields:
+    date:   KD-25614\s\d{6}-G-\d*\s(\d{2}.\d{2}.\d{4})
+    amount: Gesamt\s\/\sBrutto\s*(\d{1,10},\d{2})
+    invoice_number: KD-25614\s(\d{6}-G-\d*)\s\d{2}.\d{2}.\d{4}
+keywords:
+ - KD-25614-001
+ - Domain-Offensive
+ - Rechnung
+
+lines:
+  start: 'Leistungsdatum\s+Status\s+Bezeichnung\s+(Laufzeit\s+)?MwSt\s+Brutto\s+Gesamt'
+  end: '\s+Fällige\sBeträge\sziehen\swir\smit\seiner\sSEPA-'
+  line: '(?P<item_date>\s\d{2}.\d{2}.\d{4})\s+((?P<item_count>\d+)\sx\s)?(?P<desc>.*)\s+(?P<item_tax>\d{2})[%]\s+(?P<item_price>\d{1,10}.\d{2})\s[€]\s+(?P<item_total>\d{1,10}.\d{2})\s[€]'
+  types:
+      qty: float
+      price: float
+
+
+ 
+options:
+  remove_whitespace: false
+  date_formats:
+    - '%d.%m.%Y'
+  decimal_separator: ','
